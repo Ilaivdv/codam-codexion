@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/10 11:33:27 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/10 17:01:16 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/10 22:04:31 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ typedef enum e_scheduler
 {
 	FIFO,
 	EDF
-} t_scheduler;
+}	t_scheduler;
 
-typedef struct s_ctx 
+typedef struct s_ctx
 {
 	unsigned int	coders;
 	unsigned int	burnout_time;
@@ -29,6 +29,8 @@ typedef struct s_ctx
 	unsigned int	max_compiles;
 	unsigned int	dongle_cooldown;
 	t_scheduler		scheduler;
-} t_ctx;
+}	t_ctx;
+
+int	get_args(char **argv, t_ctx *ctx);
 
 #endif

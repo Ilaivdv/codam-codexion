@@ -5,7 +5,7 @@ CC = cc -Wall -Werror -Wextra
 LIB_FLAGS = -lpthread
 NAME = codexion
 SRC_DIR = src
-SRC = main.c
+SRC = main.c args.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
@@ -24,7 +24,7 @@ $(OBJ_DIR):
 	mkdir -p $@
 
 clean:
-	@rm $(SRC:%.c=$(OBJ_DIR)/%.o)
+	-@rm $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 fclean: clean
-	@rm $(NAME)
+	-@rm $(NAME)
