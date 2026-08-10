@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/07 12:23:34 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/10 12:42:24 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/10 12:50:57 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void*	do_thing()
+void	*do_thing(void *p)
 {
-	printf("hi\n");
+	printf("hi %p\n", p);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_t th1;
+	pthread_t	th1;
+
 	argc = 0;
 	argv = NULL;
-	pthread_create(&th1, NULL, &do_thing, NULL); 
+	pthread_create(&th1, NULL, &do_thing, NULL);
 	pthread_join(th1, NULL);
 	return (0);
 }
-
