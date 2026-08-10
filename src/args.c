@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                       ::::::::             */
-/*   codexion.h                                        :+:    :+:             */
+/*   args.c                                            :+:    :+:             */
 /*                                                    +:+                     */
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
-/*   Created: 2026/08/10 11:33:27 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/10 17:01:16 by ivan-der     ########   odam.nl          */
+/*   Created: 2026/08/10 14:32:00 by ivan-der     #+#    #+#                  */
+/*   Updated: 2026/08/10 16:28:38 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODEXION_H
-# define CODEXION_H
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef enum e_scheduler
+int	get_args(int argc, char **argv)
 {
-	FIFO,
-	EDF
-} t_scheduler;
+	size_t	i;
 
-typedef struct s_ctx 
-{
-	unsigned int	coders;
-	unsigned int	burnout_time;
-	unsigned int	compile_time;
-	unsigned int	debug_time;
-	unsigned int	refactor_time;
-	unsigned int	max_compiles;
-	unsigned int	dongle_cooldown;
-	t_scheduler		scheduler;
-} t_ctx;
+	i = 1;
+	while (i < argc)
+		printf("");
 
-#endif
+	return (0);
+}
