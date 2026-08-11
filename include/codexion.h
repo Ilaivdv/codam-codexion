@@ -6,12 +6,14 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/10 11:33:27 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/10 22:04:31 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/11 11:12:13 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
+
+# define MAX_THREADS 512
 
 typedef enum e_scheduler
 {

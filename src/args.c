@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/10 14:32:00 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/10 22:20:08 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/11 10:40:57 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_args(char **argv, t_ctx *ctx)
 	else
 		return (1);
 	while (argv++ && *(argv + 1) != NULL)
-		if (!atoi(*argv))
+		if (atoi(*argv) <= 0)
 			return (1);
 	return (0);
 }
