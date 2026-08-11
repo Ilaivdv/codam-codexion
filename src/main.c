@@ -6,32 +6,37 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/07 12:23:34 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/11 11:45:32 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/11 16:25:52 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
+#include "../include/coder.h"
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void	*coder_compile(void *p)
-{
-	printf("hi %p\n", p);
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
-	pthread_t	th1;
+	pthread_t	*threads;
+	// t_coder		*coders;
 	t_ctx		ctx;
+	ssize_t		i;
 
 	if (argc != 9 || get_args(argv, &ctx) || ctx.coders > MAX_THREADS)
 	{
-		fprintf(stderr, "Incorrect arguments!\nSee 'make help'.\n");
+		fprintf(stderr, "Incorrect arguments!\nSee 'make help'\n");
 		return (1);
 	}
-	pthread_create(&th1, NULL, &coder_compile, NULL);
-	pthread_join(th1, NULL);
+	threads = malloc(sizeof(pthread_t) * ctx.coders);
+	if (!threads)
+		return (2);
+	i = -1;
+	while (i++ < (ctx.coders - 1))
+		// pthread_create(&threads[i], NULL, &coder_compile, NULL);
+	// i = -1;
+	// while (i++ < (ctx.coders - 1))
+	// 	pthread_join(threads[i], NULL);
+	// free(threads);
 	return (0);
 }

@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                       ::::::::             */
-/*   codexion.h                                        :+:    :+:             */
+/*   coder.h                                           :+:    :+:             */
 /*                                                    +:+                     */
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
-/*   Created: 2026/08/10 11:33:27 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/11 16:21:33 by ivan-der     ########   odam.nl          */
+/*   Created: 2026/08/11 14:05:25 by ivan-der     #+#    #+#                  */
+/*   Updated: 2026/08/11 14:40:23 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODEXION_H
-# define CODEXION_H
+#ifndef CODER_H
+# define CODER_H
 
-# define MAX_THREADS 512
+# include <stdbool.h>
 
-typedef enum e_scheduler
+typedef struct s_dongle
 {
-	FIFO,
-	EDF
-}	t_scheduler;
+	bool	is_available;
+	// something for the cooldown here
+}	t_dongle;
 
-typedef struct s_ctx
+typedef enum s_coder_states
 {
-	unsigned int	coders;
-	unsigned int	burnout_time;
-	unsigned int	compile_time;
-	unsigned int	debug_time;
-	unsigned int	refactor_time;
-	unsigned int	max_compiles;
-	unsigned int	dongle_cooldown;
-	t_scheduler		scheduler;
-}	t_ctx;
+	WAITING,
+	COMPILING,
+	DEBUGGING,
+	REFACTORING,
+}	t_coder_states;
 
-int	get_args(char **argv, t_ctx *ctx);
+typedef struct s_coder
+{
+	t_coder_states	state;
+	t_dongle		*dongles;
+	bool			burnout;
+}	t_coder;
 
 #endif
