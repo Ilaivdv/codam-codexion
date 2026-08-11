@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/07 12:23:34 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/11 16:25:52 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/11 20:44:31 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ int	main(int argc, char **argv)
 		return (2);
 	i = -1;
 	while (i++ < (ctx.coders - 1))
-		// pthread_create(&threads[i], NULL, &coder_compile, NULL);
-	// i = -1;
-	// while (i++ < (ctx.coders - 1))
-	// 	pthread_join(threads[i], NULL);
-	// free(threads);
+		if (pthread_create(&threads[i], NULL, &init_coder, NULL))
+			return (2);
+	i = -1;
+	while (i++ < (ctx.coders - 1))
+		if (pthread_join(threads[i], NULL))
+			return (3);
+	free(threads);
 	return (0);
 }
