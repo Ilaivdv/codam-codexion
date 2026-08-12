@@ -5,7 +5,7 @@ CC = cc -Wall -Werror -Wextra
 LIB_FLAGS = -lpthread
 NAME = codexion
 SRC_DIR = src
-SRC = main.c args.c
+SRC = main.c args.c coder_utils.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

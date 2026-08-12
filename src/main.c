@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+                      */
 /*                                                  +#+                       */
 /*   Created: 2026/08/07 12:23:34 by ivan-der     #+#    #+#                  */
-/*   Updated: 2026/08/11 20:44:31 by ivan-der     ########   odam.nl          */
+/*   Updated: 2026/08/12 15:43:56 by ivan-der     ########   odam.nl          */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static int	init_coders(t_coder **coders, pthread_t **threads,
+		t_dongle **dongles, int n);
+
 int	main(int argc, char **argv)
 {
 	pthread_t	*threads;
-	// t_coder		*coders;
+	t_coder		*coders;
+	t_dongle	*dongles;
 	t_ctx		ctx;
 	ssize_t		i;
 
@@ -29,16 +33,34 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	threads = malloc(sizeof(pthread_t) * ctx.coders);
-	if (!threads)
+	coders = malloc(sizeof(t_coder) * ctx.coders);
+	dongles = malloc(sizeof(t_dongle) * ctx.coders);
+	if (!threads || !coders ||
+			init_coders(&coders, &threads, &dongles, ctx.coders))
 		return (2);
-	i = -1;
-	while (i++ < (ctx.coders - 1))
-		if (pthread_create(&threads[i], NULL, &init_coder, NULL))
-			return (2);
 	i = -1;
 	while (i++ < (ctx.coders - 1))
 		if (pthread_join(threads[i], NULL))
 			return (3);
 	free(threads);
+	free(coders);
+	free(dongles);
+	return (0);
+}
+
+static int	init_coders(t_coder **coders, pthread_t **threads,
+		t_dongle **dongles, int n)
+{
+	ssize_t		i;
+
+	i = -1;
+	while (i++ < (n - 1))
+	{
+		(*coders + i)->coder_id = i;
+		(*coders + i)->dongles[0] = *(*dongles + i);
+		(*coders + i)->dongles[1] = *(*dongles + ((i + 1) % n));
+		if (pthread_create(*threads + i, NULL, &coder_get_dongle, *coders + i))
+			return (1);
+	}
 	return (0);
 }
