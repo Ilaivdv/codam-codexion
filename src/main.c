@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/13 20:10:58 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/17 14:15:05 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/17 21:28:46 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 			return (3);
 	free(threads);
 	free(coders);
-	free(dongles);
+	free(dongles); // TODO: destroy mutexes within dongles
 	return (0);
 }
 
