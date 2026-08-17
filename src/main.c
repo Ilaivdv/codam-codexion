@@ -6,18 +6,19 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/13 20:10:58 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/15 14:50:51 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/17 14:15:05 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include "../include/coder.h"
 #include <pthread.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 static int	init_coders(t_coder **coders, pthread_t **threads,
-		t_dongle **dongles, int n);
+				t_dongle **dongles, int n);
 
 int	main(int argc, char **argv)
 {
@@ -35,8 +36,8 @@ int	main(int argc, char **argv)
 	threads = malloc(sizeof(pthread_t) * ctx.coders);
 	coders = malloc(sizeof(t_coder) * ctx.coders);
 	dongles = malloc(sizeof(t_dongle) * ctx.coders);
-	if (!threads || !coders ||
-			init_coders(&coders, &threads, &dongles, ctx.coders))
+	if (!threads || !coders
+		|| init_coders(&coders, &threads, &dongles, ctx.coders))
 		return (2);
 	i = -1;
 	while (i++ < (ctx.coders - 1))
@@ -56,9 +57,16 @@ static int	init_coders(t_coder **coders, pthread_t **threads,
 	i = -1;
 	while (i++ < (n - 1))
 	{
-		(*coders + i)->coder_id = i;
-		(*coders + i)->dongles[0] = *(*dongles + i);
-		(*coders + i)->dongles[1] = *(*dongles + ((i + 1) % n));
+		pthread_mutex_init(&(*dongles + i)->mutex, NULL);
+		(*dongles + i)->is_available = true;
+		// printf("%zu, dongle %i\n", i, (*dongles + i)->is_available);
+	}
+	i = -1;
+	while (i++ < (n - 1))
+	{
+		(*coders + i)->id = i;
+		(*coders + i)->dongles[0] = (*dongles + i);
+		(*coders + i)->dongles[1] = (*dongles + ((i + 1) % n));
 		if (pthread_create(*threads + i, NULL, &coder_get_dongle, *coders + i))
 			return (1);
 	}
