@@ -6,13 +6,14 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:25 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 13:32:56 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 13:53:14 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODER_H
 # define CODER_H
 
+# include "codexion.h"
 # include <stdbool.h>
 # include <pthread.h>
 
@@ -34,6 +35,7 @@ typedef enum s_coder_states
 typedef struct s_coder
 {
 	int				id;
+	t_ctx			*ctx;
 	t_coder_states	state;
 	t_dongle		*dongles[2];
 	bool			burnout;
