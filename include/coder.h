@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:25 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 13:53:14 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 16:25:39 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ typedef struct s_coder
 	bool			burnout;
 }	t_coder;
 
-void	*wait_for_dongle(void *c);
+void	*wait_for_dongle(void *p);
 
 #endif
