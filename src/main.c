@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/13 20:10:58 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/17 21:28:46 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 10:45:19 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int	main(int argc, char **argv)
 	while (i++ < (ctx.coders - 1))
 		if (pthread_join(threads[i], NULL))
 			return (3);
+	// DEBUG
+	// for (size_t i = 0; i < ctx.coders; i++)
+	// 	printf("coder %d, dongles available: %d %d\n", (coders + i)->id, coders->dongles[0][0].is_available, coders->dongles[0][1].is_available);
 	free(threads);
 	free(coders);
 	free(dongles); // TODO: destroy mutexes within dongles
@@ -59,7 +62,6 @@ static int	init_coders(t_coder **coders, pthread_t **threads,
 	{
 		pthread_mutex_init(&(*dongles + i)->mutex, NULL);
 		(*dongles + i)->is_available = true;
-		// printf("%zu, dongle %i\n", i, (*dongles + i)->is_available);
 	}
 	i = -1;
 	while (i++ < (n - 1))
