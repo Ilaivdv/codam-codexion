@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:25 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 16:25:39 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 16:46:51 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,13 @@ typedef struct s_dongle
 	bool			is_available;
 }	t_dongle;
 
-typedef enum s_coder_states
-{
-	WAITING,
-	COMPILING,
-	DEBUGGING,
-	REFACTORING,
-}	t_coder_states;
-
 typedef struct s_coder
 {
 	int				id;
 	t_ctx			*ctx;
-	t_coder_states	state;
 	t_dongle		*dongles[2];
 	bool			burnout;
+	int				compiles;
 }	t_coder;
 
 void	*wait_for_dongle(void *p);
