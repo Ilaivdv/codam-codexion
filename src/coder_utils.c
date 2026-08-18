@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 11:14:55 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 13:32:56 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-void	*coder_get_dongle(void *c)
+void	*wait_for_dongle(void *c)
 {
 	t_coder	*coder;
 

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/13 20:10:58 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 10:45:19 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 13:33:15 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	init_coders(t_coder **coders, pthread_t **threads,
 		(*coders + i)->id = i;
 		(*coders + i)->dongles[0] = (*dongles + i);
 		(*coders + i)->dongles[1] = (*dongles + ((i + 1) % n));
-		if (pthread_create(*threads + i, NULL, &coder_get_dongle, *coders + i))
+		if (pthread_create(*threads + i, NULL, &wait_for_dongle, *coders + i))
 			return (1);
 	}
 	return (0);
