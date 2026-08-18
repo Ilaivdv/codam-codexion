@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 20:21:30 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 21:26:08 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
+
+// TODO add wait time checks for burnout
 
 static void	state_process(t_coder *coder);
 
