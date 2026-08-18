@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 17:19:10 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 20:21:30 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,22 @@ void	*wait_for_dongle(void *p)
 
 	coder = (t_coder *)p;
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
-	pthread_mutex_lock(&coder->dongles[1]->mutex);
-	if (coder->dongles[0][0].is_available && coder->dongles[0][1].is_available)
+	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
+		pthread_mutex_lock(&coder->dongles[1]->mutex);
+	if (coder->dongles[0]->is_available && coder->dongles[1]->is_available)
 	{
 		printf("%d has taken a dongle\n", coder->id);
 		coder->dongles[0]->is_available = false;
-		printf("%d has taken a dongle\n", coder->id);
-		coder->dongles[1]->is_available = false;
-		state_process(coder);
+		if (coder->dongles[1]->is_available)
+		{
+			printf("%d has taken a dongle\n", coder->id);
+			coder->dongles[1]->is_available = false;
+			state_process(coder);
+		}
 	}
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
-	pthread_mutex_unlock(&coder->dongles[1]->mutex);
+	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
+		pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	return (0);
 }
 
