@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:10:02 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 15:15:42 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/18 17:19:08 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 static int	init_coders(t_coder **coders, pthread_t **threads,
 				t_dongle **dongles, t_ctx *ctx);
+
+// TODO use compound literals
 
 int	main(int argc, char **argv)
 {
