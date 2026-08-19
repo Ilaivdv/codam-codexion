@@ -5,52 +5,36 @@
 /*                                                    :+:+:+  +:+             */
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
-/*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 21:26:08 by ivan-der     ###    #### orminette :(    */
+/*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
+/*   Updated: 2026/08/19 22:26:54 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/codexion.h"
 #include "../include/coder.h"
-#include <pthread.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 
-// TODO add wait time checks for burnout
-
-static void	state_process(t_coder *coder);
-
-void	*wait_for_dongle(void *p)
+int	init_coders(t_monitor *mntr)
 {
-	t_coder	*coder;
+	ssize_t		i;
 
-	coder = (t_coder *)p;
-	pthread_mutex_lock(&coder->dongles[0]->mutex);
-	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
-		pthread_mutex_lock(&coder->dongles[1]->mutex);
-	if (coder->dongles[0]->is_available && coder->dongles[1]->is_available)
+	mntr->coders = malloc(sizeof(t_coder) * mntr->ctx->n_coders);
+	mntr->dongles = malloc(sizeof(t_dongle) * mntr->ctx->n_coders);
+	if (!mntr->coders || !mntr->dongles)
+		return (1);
+	i = -1;
+	while (i++ < (mntr->ctx->n_coders - 1))
 	{
-		printf("%d has taken a dongle\n", coder->id);
-		coder->dongles[0]->is_available = false;
-		if (coder->dongles[1]->is_available)
-		{
-			printf("%d has taken a dongle\n", coder->id);
-			coder->dongles[1]->is_available = false;
-			state_process(coder);
-		}
+		pthread_mutex_init(&(mntr->dongles + i)->mutex, NULL);
+		(mntr->dongles + i)->is_available = true;
 	}
-	pthread_mutex_unlock(&coder->dongles[0]->mutex);
-	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
-		pthread_mutex_unlock(&coder->dongles[1]->mutex);
+	i = -1;
+	while (i++ < (mntr->ctx->n_coders - 1))
+	{
+		mntr->coders[i] = (t_coder){.id = i,
+			.dongles = {mntr->dongles + i,
+			mntr->dongles + ((i + 1) % mntr->ctx->n_coders)}};
+	}
+	// TODO init_threads function here
 	return (0);
-}
-
-static void	state_process(t_coder *coder)
-{
-	printf("%d is compiling\n", coder->id);
-	usleep(coder->ctx->compile_time);
-	printf("%d is debugging\n", coder->id);
-	usleep(coder->ctx->debug_time);
-	printf("%d is refactoring\n", coder->id);
-	usleep(coder->ctx->refactor_time);
 }

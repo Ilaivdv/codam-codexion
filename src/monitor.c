@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                      ::::    :::           */
-/*   coder.h                                           :+:+:   :+:            */
+/*   monitor.c                                         :+:+:   :+:            */
 /*                                                    :+:+:+  +:+             */
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
-/*   Created: 2026/08/16 15:20:25 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 22:30:56 by ivan-der     ###    #### orminette :(    */
+/*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
+/*   Updated: 2026/08/19 22:29:45 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODER_H
-# define CODER_H
+// #include "../include/codexion.h"
+// #include <sys/time.h>
+// #include <unistd.h>
 
-# include <stdbool.h>
-# include <pthread.h>
-# include <pthread.h>
-
-# define UPDATE_TICKS 500
-
-typedef struct s_dongle
-{
-	pthread_mutex_t	mutex;
-	unsigned int	cooldown_time;
-	bool			is_available;
-}	t_dongle;
-
-typedef struct s_coder
-{
-	pthread_t		thread;
-	int				id;
-	int				compiles;
-	t_dongle		*dongles[2];
-	unsigned int	action_elapsed_time;
-}	t_coder;
-
-#endif
+// TODO change this to use a static var for start time for reusability
+// unsigned int	get_elapsed_time(t_ctx *ctx)
+// {
+// 	struct timeval	tv;
+//
+// 	gettimeofday(&tv, NULL);
+// 	return ((tv.tv_usec - ctx->monitor->epoch) / 1000);
+// }

@@ -5,7 +5,7 @@ CC = cc -Wall -Werror -Wextra
 LIB_FLAGS = -lpthread
 NAME = codexion
 SRC_DIR = src
-SRC = main.c args.c coder_utils.c
+SRC = main.c utils.c coder.c coder_utils.c dongles.c monitor.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
@@ -17,7 +17,7 @@ re: fclean all
 help:
 	@echo "Arguments needed to run the program are as follows:"
 	@echo "(All times given are in milliseconds)\n"
-	@echo "number_of_coders	- The number of coders and available dongles"
+	@echo "number_of_coders	- The number of coders and available dongles (max 512)"
 	@echo "time_to_burnout		- The time a coder has to compile again after last compilation"
 	@echo "time_to_compile		- The time it takes to compile"
 	@echo "time_to_debug		- The time it takes to debug"

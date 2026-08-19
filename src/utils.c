@@ -6,20 +6,17 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 12:24:34 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/19 22:27:47 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-
-#include <stdio.h>
 
 int	get_args(char **argv, t_ctx *ctx)
 {
-	*ctx = (t_ctx){.coders = atoi(argv[1]),
+	*ctx = (t_ctx){.n_coders = atoi(argv[1]),
 		.burnout_time = atoi(argv[2]) * 1000,
 		.compile_time = atoi(argv[3]) * 1000,
 		.debug_time = atoi(argv[4]) * 1000,
