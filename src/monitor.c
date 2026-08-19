@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                      ::::    :::           */
-/*   coder.h                                           :+:+:   :+:            */
+/*   monitor.c                                         :+:+:   :+:            */
 /*                                                    :+:+:+  +:+             */
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
-/*   Created: 2026/08/16 15:20:25 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 11:15:02 by ivan-der     ###    #### orminette :(    */
+/*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
+/*   Updated: 2026/08/19 13:10:36 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CODER_H
-# define CODER_H
+#include "../include/codexion.h"
+#include <sys/time.h>
+#include <unistd.h>
 
-# include "codexion.h"
-# include <stdbool.h>
-# include <pthread.h>
-
-typedef struct s_dongle
+unsigned int	get_elapsed_time(t_ctx *ctx)
 {
-	pthread_mutex_t	mutex;
-	unsigned int	cooldown_time;
-	bool			is_available;
-}	t_dongle;
+	struct timeval	tv;
 
-typedef struct s_coder
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_usec - ctx->monitor->start) / 1000);
+}
+
+int	monitor_process()
 {
-	int				id;
-	t_ctx			*ctx;
-	int				compiles;
-	t_dongle		*dongles[2];
-	unsigned int	burnout_start_time;
-	bool			burnout;
-}	t_coder;
-
-void	*wait_for_dongle(void *p);
-
-#endif
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 21:26:08 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/19 13:01:24 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	state_process(t_coder *coder)
 {
 	printf("%d is compiling\n", coder->id);
 	usleep(coder->ctx->compile_time);
-	printf("%d is debugging\n", coder->id);
+	printf("%d %d is debugging\n", get_elapsed_time(coder->ctx), coder->id);
 	usleep(coder->ctx->debug_time);
 	printf("%d is refactoring\n", coder->id);
 	usleep(coder->ctx->refactor_time);
