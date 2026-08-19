@@ -36,7 +36,7 @@ $(OBJ_DIR):
 	mkdir -p $@
 
 clean:
-	-@rm $(SRC:%.c=$(OBJ_DIR)/%.o)
+	-@rm -r $(OBJ_DIR)
 
 fclean: clean
 	-@rm $(NAME)
