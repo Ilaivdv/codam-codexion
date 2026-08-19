@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 22:24:27 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/19 22:38:16 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "coder.h"
 # include <stdbool.h>
-# include <sys/time.h>
 
 # define MAX_THREADS 512
 
