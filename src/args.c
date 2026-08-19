@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/18 16:11:06 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/19 11:40:07 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 
 int	get_args(char **argv, t_ctx *ctx)
 {
-	ctx->coders = atoi(argv[1]);
-	ctx->burnout_time = atoi(argv[2]) * 1000;
-	ctx->compile_time = atoi(argv[3]) * 1000;
-	ctx->debug_time = atoi(argv[4]) * 1000;
-	ctx->refactor_time = atoi(argv[5]) * 1000;
-	ctx->max_compiles = atoi(argv[6]);
-	ctx->dongle_cooldown = atoi(argv[7]) * 1000;
+	*ctx = (t_ctx){.coders = atoi(argv[1]),
+		.burnout_time = atoi(argv[2]) * 10000,
+		.compile_time = atoi(argv[3]) * 10000,
+		.debug_time = atoi(argv[4]) * 10000,
+		.refactor_time = atoi(argv[5]) * 10000,
+		.max_compiles = atoi(argv[6]),
+		.dongle_cooldown = atoi(argv[7]) * 10000};
 	if (!strcmp(argv[8], "fifo"))
 		ctx->scheduler = FIFO;
 	else if (!strcmp(argv[8], "edf"))
