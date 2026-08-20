@@ -6,14 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 12:29:57 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 15:13:55 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <sys/time.h>
 
-// TODO change this to use a static var for start time for reusability
 long long	get_elapsed_time(void)
 {
 	static long long	epoch = -1;
