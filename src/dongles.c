@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 09:46:59 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 10:13:11 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_dongles(t_ctx *ctx)
 {
 	ssize_t	i;
 
-	i = -1;	
+	i = -1;
 	while (i++ < (ctx->params->n_coders - 1))
 	{
 		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL))
