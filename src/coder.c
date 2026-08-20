@@ -6,26 +6,41 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 22:26:27 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 15:51:13 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/coder.h"
+#include "../include/codexion.h"
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 
-// TODO REFACTOR
+#include <unistd.h>
+
 // TODO add and update time stats for coders
+int	wait_for_dongle(t_coder *coder);
 
-static void	action_process(t_coder *coder);
-
-void	*wait_for_dongle(void *p)
+void	*action_process(void *c)
 {
 	t_coder	*coder;
 
-	coder = (t_coder *)p;
+	coder = (t_coder *)c;
+	wait_for_dongle(coder);
+
+	// TODO make compile function
+	// debug and refactor action can possibly happen here
+
+	// DEBUG
+	// printf("coder %d, <-%d, %d->\n", coder->id, coder->dongles[0]->is_available, coder->dongles[1]->is_available);
+	// usleep(1000);
+	// printf("%lld ms\n", get_elapsed_time());
+
+	return (0);
+}
+
+int	wait_for_dongle(t_coder *coder)
+{
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
 	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
 		pthread_mutex_lock(&coder->dongles[1]->mutex);
@@ -37,24 +52,10 @@ void	*wait_for_dongle(void *p)
 		{
 			printf("%d has taken a dongle\n", coder->id);
 			coder->dongles[1]->is_available = false;
-			action_process(coder);
 		}
 	}
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (*(&coder->dongles[0]) != *(&coder->dongles[1]))
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	return (0);
-}
-
-static void	action_process(t_coder *coder)
-{
-	printf("%d is compiling\n", coder->id);
-	usleep(coder->ctx->compile_time);
-	printf("%d is debugging\n", coder->id);
-	while (coder->action_elapsed_time < coder->ctx->debug_time
-			&& 1 + 0 * usleep(UPDATE_TICKS))
-
-	// usleep(coder->ctx->debug_time);
-	printf("%d is refactoring\n", coder->id);
-	// usleep(coder->ctx->refactor_time);
 }

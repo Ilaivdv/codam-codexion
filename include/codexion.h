@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 09:35:30 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 11:54:40 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_ctx
 
 int				init_coders(t_ctx *ctx);
 int				init_dongles(t_ctx *ctx);
-void			*wait_for_dongle(void *p);
+void			*action_process(void *c);
 int				get_args(char **argv, t_params *params);
-unsigned int	get_elapsed_time(t_params *params);
+long long		get_elapsed_time(void);
 
 #endif

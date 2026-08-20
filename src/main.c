@@ -6,15 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:10:02 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 12:30:35 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 15:10:21 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <stdbool.h>
 #include <stdio.h>
-
-#include <unistd.h>
 
 int	main(int argc, char **argv)
 {
