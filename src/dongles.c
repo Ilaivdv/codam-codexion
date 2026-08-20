@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 09:35:01 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 09:46:59 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	init_dongles(t_ctx *ctx)
 	i = -1;	
 	while (i++ < (ctx->params->n_coders - 1))
 	{
-		pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL);
+		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL))
+			return (1);
 		(ctx->dongles + i)->is_available = true;
 	}
 	return (0);
