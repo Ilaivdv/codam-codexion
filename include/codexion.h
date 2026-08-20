@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/19 22:38:16 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/20 09:35:30 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef enum e_scheduler
 	EDF
 }	t_scheduler;
 
-typedef struct s_ctx
+typedef struct s_params
 {
 	unsigned int	n_coders;
 	unsigned int	burnout_time;
@@ -34,20 +34,21 @@ typedef struct s_ctx
 	unsigned int	max_compiles;
 	unsigned int	dongle_cooldown;
 	t_scheduler		scheduler;
-}	t_ctx;
+}	t_params;
 
-typedef struct s_monitor
+typedef struct s_ctx
 {
-	t_ctx			*ctx;
+	t_params		*params;
 	bool			process;
 
 	t_dongle		*dongles;
 	t_coder			*coders;
-}	t_monitor;
+}	t_ctx;
 
-int				init_coders(t_monitor *mntr);
+int				init_coders(t_ctx *ctx);
+int				init_dongles(t_ctx *ctx);
 void			*wait_for_dongle(void *p);
-int				get_args(char **argv, t_ctx *ctx);
-unsigned int	get_elapsed_time(t_ctx *ctx);
+int				get_args(char **argv, t_params *params);
+unsigned int	get_elapsed_time(t_params *params);
 
 #endif
