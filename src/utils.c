@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 14:44:43 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 16:59:49 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <string.h>
 #include <stdint.h>
 
-int	get_args(char **argv, t_params *ctx)
+int	get_args(int argc, char **argv, t_params *ctx)
 {
+	if (argc != 9)
+		return (1);
 	*ctx = (t_params){.n_coders = atoi(argv[1]),
 		.burnout_time = atoi(argv[2]) * 1000,
 		.compile_time = atoi(argv[3]) * 1000,
@@ -58,4 +60,10 @@ int64_t	get_cmp(t_coder *coder)
 		return (get_elapsed_time());
 	else
 		return (coder->deadline - get_elapsed_time());
+}
+
+void	cleanup(t_ctx *ctx)
+{
+	free(ctx->coders);
+	free(ctx->dongles);
 }
