@@ -6,16 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 14:58:04 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 14:58:25 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
-#include "../include/coder.h"
 #include <stdlib.h>
 #include <pthread.h>
-
-#include <stdio.h>
 
 static int	process_threads(t_ctx *ctx);
 
@@ -30,9 +27,10 @@ int	init_coders(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->params->n_coders)
 	{
-		ctx->coders[i] = (t_coder){.id = i,
+		ctx->coders[i] = (t_coder){.ctx = ctx, .id = i + 1,
 			.dongles = {ctx->dongles + i,
-			ctx->dongles + ((i + 1) % ctx->params->n_coders)}};
+			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
+			.deadline = get_elapsed_time() + ctx->params->burnout_time};
 	}
 	return (process_threads(ctx));
 }
@@ -43,9 +41,11 @@ static int	process_threads(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->params->n_coders)
+	{
 		if (pthread_create(&ctx->coders[i].thread, NULL,
 				&action_process, &ctx->coders[i]))
 			return (1);
+	}
 	i = -1;
 	while (++i < ctx->params->n_coders)
 		if (pthread_join(ctx->coders[i].thread, NULL))

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 13:34:54 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 14:43:51 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # define MAX_THREADS 512
 # define UPDATE_TICKS 500
 
-typedef struct s_coder	t_coder;
-typedef struct s_dongle	t_dongle;
-typedef struct s_ctx	t_ctx;
 typedef struct s_params	t_params;
+typedef struct s_ctx	t_ctx;
+typedef struct s_coder	t_coder;
+typedef struct s_queue	t_queue;
+typedef struct s_dongle	t_dongle;
 
 typedef enum e_scheduler
 {
@@ -47,18 +48,11 @@ typedef struct s_ctx
 {
 	t_params		*params;
 	bool			process;
+	pthread_cond_t	ping_heap;
 
 	t_dongle		*dongles;
 	t_coder			*coders;
 }	t_ctx;
-
-typedef struct s_dongle
-{
-	pthread_mutex_t	mutex;
-	unsigned int	cooldown_time;
-	int				queue[2];
-	int				queue_size;
-}	t_dongle;
 
 typedef struct s_coder
 {
@@ -70,6 +64,20 @@ typedef struct s_coder
 	int64_t			deadline;
 }	t_coder;
 
+typedef struct s_queue
+{
+	int64_t	cmp;
+	t_coder	*coder;
+}	t_queue;
+
+typedef struct s_dongle
+{
+	pthread_mutex_t	mutex;
+	unsigned int	cooldown_time;
+	t_queue			queue[2];
+	int				queue_size;
+}	t_dongle;
+
 int64_t	get_elapsed_time(void);
 
 int		init_coders(t_ctx *ctx);
@@ -79,5 +87,6 @@ void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
 
 int		get_args(char **argv, t_params *params);
+int64_t	get_cmp(t_coder *coder);
 
 #endif
