@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 15:41:57 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 16:09:45 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,17 @@ typedef struct s_dongle
 	int				queue_size;
 }	t_dongle;
 
-int64_t	get_elapsed_time(void);
-
-int		init_coders(t_ctx *ctx);
-int		init_dongles(t_ctx *ctx);
-
+// actions
 void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
 
+// utils
+int64_t	get_elapsed_time(void);
 int		get_args(char **argv, t_params *params);
+int		init_coders(t_ctx *ctx);
+int		init_dongles(t_ctx *ctx);
 int64_t	get_cmp(t_coder *coder);
+void	heap_push(t_coder *coder, t_dongle *dongle);
+void	heap_pop(t_dongle *dongle);
 
 #endif
