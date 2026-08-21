@@ -6,11 +6,12 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 16:56:51 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 18:28:36 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <pthread.h>
 
@@ -50,5 +51,6 @@ static int	process_threads(t_ctx *ctx)
 	while (++i < ctx->params->n_coders)
 		if (pthread_join(ctx->coders[i].thread, NULL))
 			return (2);
+	ctx->process = false;
 	return (0);
 }

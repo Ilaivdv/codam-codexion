@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 17:09:18 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 22:24:07 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdint.h>
 
 # define MAX_THREADS 512
-# define UPDATE_TICKS 50
+# define UPDATE_TICKS 10
 
 typedef struct s_params	t_params;
 typedef struct s_ctx	t_ctx;
@@ -46,7 +46,7 @@ typedef struct s_params
 
 typedef struct s_ctx
 {
-	pthread_t		thread;
+	pthread_t		monitor_thread;
 	t_params		*params;
 	bool			process;
 	pthread_cond_t	ping_queue;
