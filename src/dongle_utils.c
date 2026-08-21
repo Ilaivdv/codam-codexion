@@ -6,12 +6,14 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 16:08:36 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 16:54:08 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <sys/types.h>
+
+// #include <stdio.h>
 
 int	init_dongles(t_ctx *ctx)
 {
@@ -46,7 +48,7 @@ void	heap_push(t_coder *coder, t_dongle *dongle)
 		}
 	}
 
-	//DEBUG
+	// DEBUG
 	// printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
 	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
 }

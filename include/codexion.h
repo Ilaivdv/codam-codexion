@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 16:09:45 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 17:09:18 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdint.h>
 
 # define MAX_THREADS 512
-# define UPDATE_TICKS 500
+# define UPDATE_TICKS 50
 
 typedef struct s_params	t_params;
 typedef struct s_ctx	t_ctx;
@@ -46,9 +46,10 @@ typedef struct s_params
 
 typedef struct s_ctx
 {
+	pthread_t		thread;
 	t_params		*params;
 	bool			process;
-	pthread_cond_t	ping_heap;
+	pthread_cond_t	ping_queue;
 
 	t_dongle		*dongles;
 	t_coder			*coders;
@@ -78,13 +79,14 @@ typedef struct s_dongle
 	int				queue_size;
 }	t_dongle;
 
-// actions
+void	*monitor_process(void *ctx);
 void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
+void	cleanup(t_ctx *ctx);
 
 // utils
 int64_t	get_elapsed_time(void);
-int		get_args(char **argv, t_params *params);
+int		get_args(int argc, char **argv, t_params *params);
 int		init_coders(t_ctx *ctx);
 int		init_dongles(t_ctx *ctx);
 int64_t	get_cmp(t_coder *coder);
