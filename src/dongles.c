@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 15:09:02 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 15:59:16 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 static void	heap_push(t_coder *coder, t_dongle *dongle);
+static void	heap_pop(t_dongle *dongle);
 
 // TODO queues and mutexes can probably go here
 int	init_dongles(t_ctx *ctx)
@@ -49,17 +50,32 @@ static void	heap_push(t_coder *coder, t_dongle *dongle)
 	dongle->queue_size += 1;
 	if (dongle->queue_size == 1)
 		dongle->queue[0] = (t_queue){.cmp = get_cmp(coder),
-			.coder = coder};
+			.id = coder->id};
 	else
 	{
 		if (dongle->queue[0].cmp < get_cmp(coder))
 			dongle->queue[1] = (t_queue){.cmp = get_cmp(coder),
-				.coder = coder};
+				.id = coder->id};
 		else
 		{
 			dongle->queue[1] = dongle->queue[0];
 			dongle->queue[0] = (t_queue){.cmp = get_cmp(coder),
-				.coder = coder};
+				.id = coder->id};
 		}
 	}
+
+	//DEBUG
+	// printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
+	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
+}
+
+static void	heap_pop(t_dongle *dongle)
+{
+	dongle->queue[0] = dongle->queue[1];
+	dongle->queue[1] = (t_queue){.cmp = -1, .id = -1};
+	dongle->queue_size -= 1;
+
+	// DEBUG
+	// printf("queue: id %d %ld, id %d %ld\n", dongle->queue[0].id,
+	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
 }
