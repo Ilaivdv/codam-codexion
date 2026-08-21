@@ -6,17 +6,24 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/20 11:54:40 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/21 13:34:54 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
-# include "coder.h"
 # include <stdbool.h>
+# include <pthread.h>
+# include <stdint.h>
 
 # define MAX_THREADS 512
+# define UPDATE_TICKS 500
+
+typedef struct s_coder	t_coder;
+typedef struct s_dongle	t_dongle;
+typedef struct s_ctx	t_ctx;
+typedef struct s_params	t_params;
 
 typedef enum e_scheduler
 {
@@ -45,10 +52,32 @@ typedef struct s_ctx
 	t_coder			*coders;
 }	t_ctx;
 
-int				init_coders(t_ctx *ctx);
-int				init_dongles(t_ctx *ctx);
-void			*action_process(void *c);
-int				get_args(char **argv, t_params *params);
-long long		get_elapsed_time(void);
+typedef struct s_dongle
+{
+	pthread_mutex_t	mutex;
+	unsigned int	cooldown_time;
+	int				queue[2];
+	int				queue_size;
+}	t_dongle;
+
+typedef struct s_coder
+{
+	t_ctx			*ctx;
+	pthread_t		thread;
+	int				id;
+	int				compiles;
+	t_dongle		*dongles[2];
+	int64_t			deadline;
+}	t_coder;
+
+int64_t	get_elapsed_time(void);
+
+int		init_coders(t_ctx *ctx);
+int		init_dongles(t_ctx *ctx);
+
+void	*action_process(void *c);
+int		request_dongles(t_coder *coder);
+
+int		get_args(char **argv, t_params *params);
 
 #endif
