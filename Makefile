@@ -16,7 +16,7 @@ re: fclean all
 
 help:
 	@echo "Arguments needed to run the program are as follows:"
-	@echo "(All times given are in milliseconds)\n"
+	@echo -e "(All times given are in milliseconds)\n"
 	@echo "number_of_coders	- The number of coders and available dongles (max 512)"
 	@echo "time_to_burnout		- The time a coder has to compile again after last compilation"
 	@echo "time_to_compile		- The time it takes to compile"
@@ -24,7 +24,7 @@ help:
 	@echo "time_to_refactor	- The time it takes to refactor"
 	@echo "number_of_compiles_required - Number of compiles each coders has to reach until the program ends"
 	@echo "dongle_cooldown		- The cooldown a dongle has before it can be used again"
-	@echo "scheduler		- The scheduler used to decide coder priority, value can be only 'fifo' or 'edf'\n"
+	@echo -e "scheduler		- The scheduler used to decide coder priority, value can be only 'fifo' or 'edf'\n"
 
 $(NAME): $(OBJ)
 	$(CC) $(LIB_FLAGS) $^ -o $@

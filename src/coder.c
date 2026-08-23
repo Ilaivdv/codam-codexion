@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 18:14:05 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 20:48:38 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,18 @@ void	*action_process(void *c)
 	t_coder				*coder;
 
 	coder = (t_coder *)c;
-	if (request_dongles(coder) || coder_compile(coder))
+	if (request_dongles(coder))
 		return ((int *)1);
+	pthread_mutex_lock(&coder->dongles[0]->mutex);
+	pthread_mutex_lock(&coder->dongles[1]->mutex);
+	if (coder->ctx->process)
+	{
+		take_dongles(coder);
+		coder_compile(coder);
+	}
+	pthread_mutex_unlock(&coder->dongles[0]->mutex);
+	pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	// TODO debug and refactor action can possibly happen here
-
 	return (0);
 }
 

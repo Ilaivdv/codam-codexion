@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 17:14:45 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 18:22:00 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_dongle
 void	*monitor_process(void *ctx);
 void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
+void	take_dongles(t_coder *coder);
 void	print_action(t_coder *coder, char *msg);
 void	cleanup(t_ctx *ctx);
 
