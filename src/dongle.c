@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 20:53:08 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 21:06:40 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 //TODO implement dongle cooldown
 int	request_dongles(t_coder *coder)
 {
+	if (coder->ctx->params->n_coders <= 1)
+		return (1);
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
 	pthread_mutex_lock(&coder->dongles[1]->mutex);
 	dongle_heap_push(coder, coder->dongles[0]);
