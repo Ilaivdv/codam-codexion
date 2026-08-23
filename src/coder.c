@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 10:45:10 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:35:26 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	*action_process(void *c)
 	t_coder				*coder;
 
 	coder = (t_coder *)c;
-	request_dongles(coder);
+	if (request_dongles(coder))
+		return ((int *)1);
 	// TODO make compile function
 	// debug and refactor action can possibly happen here
 	//

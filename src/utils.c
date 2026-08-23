@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 11:26:40 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:54:59 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	get_args(int argc, char **argv, t_params *ctx)
 	return (0);
 }
 
-// returns time elapsed (in us), since the start of the program
-int64_t	get_elapsed_time(void)
+int64_t	get_elapsed_time(bool in_ms)
 {
 	static int64_t	epoch = -1;
 	struct timeval	tv;
@@ -50,20 +49,27 @@ int64_t	get_elapsed_time(void)
 	if (epoch == -1)
 		epoch = tv.tv_usec;
 	current_time = tv.tv_usec;
+	if (in_ms)
+		return ((current_time - epoch) / 1000);
 	return (current_time - epoch);
 }
 
-// gets queue cmp value based on scheduler
 int64_t	get_cmp(t_coder *coder)
 {
 	if (coder->ctx->params->scheduler == FIFO)
-		return (get_elapsed_time());
+		return (get_elapsed_time(false));
 	else
-		return (coder->deadline - get_elapsed_time());
+		return (coder->deadline - get_elapsed_time(false));
 }
 
 void	cleanup(t_ctx *ctx)
 {
+	ssize_t	i;
+
+	i = -1;
+	while (++i < ctx->params->n_coders)
+		pthread_mutex_destroy(&ctx->dongles[i].mutex);
+	pthread_mutex_destroy(&ctx->coder_action_mutex);
 	free(ctx->coders);
 	free(ctx->dongles);
 }

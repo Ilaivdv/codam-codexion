@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 11:51:16 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:49:11 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	init_dongles(t_ctx *ctx)
 	ssize_t	i;
 
 	i = -1;
-	pthread_cond_init(&ctx->dongle_heap_cond, NULL);
 	while (++i < ctx->params->n_coders)
 	{
 		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL))
@@ -50,8 +49,8 @@ void	dongle_heap_push(t_coder *coder, t_dongle *dongle)
 	}
 
 	// DEBUG
-	printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
-			dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
+	// printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
+	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
 }
 
 void	dongle_heap_pop(t_dongle *dongle)

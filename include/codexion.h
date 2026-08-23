@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 11:51:58 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:49:51 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_ctx
 	bool			process;
 
 	t_dongle		*dongles;
-	pthread_cond_t	dongle_heap_cond;
 	t_coder			*coders;
 }	t_ctx;
 
@@ -83,10 +82,10 @@ typedef struct s_dongle
 void	*monitor_process(void *ctx);
 void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
+void	print_action(t_coder *coder, char *msg);
 void	cleanup(t_ctx *ctx);
 
-// utils
-int64_t	get_elapsed_time(void);
+int64_t	get_elapsed_time(bool in_ms);
 int		get_args(int argc, char **argv, t_params *params);
 int		init_coders(t_ctx *ctx);
 int		init_dongles(t_ctx *ctx);

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 11:57:23 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:45:21 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>
+#include <stdio.h>
 
 static int	process_threads(t_ctx *ctx);
 
@@ -34,7 +35,7 @@ int	init_coders(t_ctx *ctx)
 		ctx->coders[i] = (t_coder){.ctx = ctx, .id = i + 1,
 			.dongles = {ctx->dongles + i,
 			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
-			.deadline = get_elapsed_time() + ctx->params->burnout_time};
+			.deadline = get_elapsed_time(false) + ctx->params->burnout_time};
 	}
 	return (process_threads(ctx));
 }
@@ -56,4 +57,11 @@ static int	process_threads(t_ctx *ctx)
 			return (2);
 	ctx->process = false;
 	return (0);
+}
+
+void	print_action(t_coder *coder, char *msg)
+{
+	pthread_mutex_lock(&coder->ctx->coder_action_mutex);
+	printf("%ld %d %s\n", get_elapsed_time(true), coder->id, msg);
+	pthread_mutex_unlock(&coder->ctx->coder_action_mutex);
 }
