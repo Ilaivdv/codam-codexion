@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 17:49:03 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 21:20:24 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	init_coders(t_ctx *ctx)
 	while (++i < ctx->params->n_coders)
 	{
 		ctx->coders[i] = (t_coder){.ctx = ctx, .id = i + 1,
-			.dongles = {ctx->dongles + i,
+			.compiles = 0, .dongles = {ctx->dongles + i,
 			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
 			.deadline = get_elapsed_time(false) + ctx->params->burnout_time};
 		// DEBUG

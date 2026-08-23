@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 21:08:01 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 21:41:39 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 void	coder_compile(t_coder *coder);
+void	coder_action(t_coder *coder, int64_t len, char *msg);
 
 void	*action_process(void *c)
 {
@@ -24,7 +25,7 @@ void	*action_process(void *c)
 
 	coder = (t_coder *)c;
 	if (request_dongles(coder))
-		return ((int *)1); // TODO wait for condition here
+		return (0); // TODO wait for condition here
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_lock(&coder->dongles[1]->mutex);
@@ -36,8 +37,15 @@ void	*action_process(void *c)
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
-	// TODO debug and refactor action
-	// TODO make loop until compilation quota
+
+	coder_action(coder, coder->ctx->params->debug_time, "is debugging");
+	coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
+	coder->deadline = get_elapsed_time(false) + \
+					  coder->ctx->params->burnout_time;
+	if (++coder->compiles < coder->ctx->params->max_compiles)
+		action_process(coder);
+	else
+		print_action(coder, "		has finished compiles!");
 	return (0);
 }
 
@@ -45,8 +53,21 @@ void	coder_compile(t_coder *coder)
 {
 	int64_t	end_time;
 
-	print_action(coder, "is compiling");
+	if (coder->ctx->process)
+		print_action(coder, "is compiling");
 	end_time = get_elapsed_time(false) + coder->ctx->params->compile_time;
+	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
+		if (get_elapsed_time(false) >= end_time)
+			break;
+}
+
+void	coder_action(t_coder *coder, int64_t len, char *msg)
+{
+	int64_t	end_time;
+
+	if (coder->ctx->process)
+		print_action(coder, msg);
+	end_time = get_elapsed_time(false) + len;
 	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
 		if (get_elapsed_time(false) >= end_time)
 			break;

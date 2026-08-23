@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 18:22:00 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 21:22:02 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_coder
 	t_ctx			*ctx;
 	pthread_t		thread;
 	int				id;
-	int				compiles;
+	unsigned int				compiles;
 	t_dongle		*dongles[2];
 	int64_t			deadline;
 }	t_coder;
