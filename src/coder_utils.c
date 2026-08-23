@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 18:28:36 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 11:57:23 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <string.h>
 
 static int	process_threads(t_ctx *ctx);
 
@@ -22,7 +23,9 @@ int	init_coders(t_ctx *ctx)
 	ssize_t	i;
 
 	ctx->coders = malloc(sizeof(t_coder) * ctx->params->n_coders);
+	memset(ctx->coders, 0, sizeof(t_coder) * ctx->params->n_coders);
 	ctx->dongles = malloc(sizeof(t_dongle) * ctx->params->n_coders);
+	memset(ctx->dongles, 0, sizeof(t_coder) * ctx->params->n_coders);
 	if (!ctx->coders || !ctx->dongles || init_dongles(ctx))
 		return (1);
 	i = -1;

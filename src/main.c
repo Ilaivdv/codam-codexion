@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:10:02 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 22:24:01 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 11:54:14 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ctx.params = &params;
+	pthread_mutex_init(&ctx.coder_action_mutex, NULL);
 	get_elapsed_time();
 	pthread_create(&ctx.monitor_thread, NULL, &monitor_process, &ctx);
 	init_coders(&ctx);

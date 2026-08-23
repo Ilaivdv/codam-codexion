@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/21 22:32:16 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 11:29:39 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 
-int	check_coder_burnout(t_ctx *ctx);
+int	coder_burnout(t_ctx *ctx);
 
 void	*monitor_process(void *c)
 {
@@ -25,12 +26,12 @@ void	*monitor_process(void *c)
 	ctx->process = true;
 	while (ctx->process + 0 * usleep(UPDATE_TICKS))
 	{
-		ctx->process = check_coder_burnout(ctx);
+		ctx->process = coder_burnout(ctx);
 	}
 	return (NULL);
 }
 
-int	check_coder_burnout(t_ctx *ctx)
+int	coder_burnout(t_ctx *ctx)
 {
 	ssize_t	i;
 
