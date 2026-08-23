@@ -6,12 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:49:11 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 17:55:27 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <sys/types.h>
+
 
 #include <stdio.h>
 
@@ -29,36 +30,50 @@ int	init_dongles(t_ctx *ctx)
 	return (0);
 }
 
+static void	dongle_heapify(t_dongle *dongle)
+{
+	t_queue	tmp;
+
+	dongle->queue[0].cmp = get_cmp(dongle->queue[0].coder);
+	dongle->queue[1].cmp = get_cmp(dongle->queue[1].coder);
+	if (dongle->queue[1].cmp < dongle->queue[0].cmp)
+	{
+		tmp = dongle->queue[0];
+		dongle->queue[0] = dongle->queue[1];
+		dongle->queue[1] = tmp;
+	}
+}
+
 void	dongle_heap_push(t_coder *coder, t_dongle *dongle)
 {
-	dongle->queue_size += 1;
+	dongle->queue_size++;
 	if (dongle->queue_size == 1)
 		dongle->queue[0] = (t_queue){.cmp = get_cmp(coder),
-			.id = coder->id};
+			.id = coder->id, .coder = coder};
 	else
 	{
 		if (dongle->queue[0].cmp < get_cmp(coder))
 			dongle->queue[1] = (t_queue){.cmp = get_cmp(coder),
-				.id = coder->id};
+				.id = coder->id, .coder = coder};
 		else
 		{
 			dongle->queue[1] = dongle->queue[0];
 			dongle->queue[0] = (t_queue){.cmp = get_cmp(coder),
-				.id = coder->id};
+				.id = coder->id, .coder = coder};
 		}
+		if (coder->ctx->params->scheduler == EDF)
+			dongle_heapify(dongle);
 	}
-
 	// DEBUG
-	// printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
-	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
+	printf("coder %d queue: id %d %ld, id %d %ld\n", coder->id, dongle->queue[0].id,
+			dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);
 }
 
 void	dongle_heap_pop(t_dongle *dongle)
 {
 	dongle->queue[0] = dongle->queue[1];
-	dongle->queue[1] = (t_queue){.cmp = -1, .id = -1};
-	dongle->queue_size -= 1;
-
+	dongle->queue[1] = (t_queue){.cmp = 0, .id = 0};
+	dongle->queue_size--;
 	// DEBUG
 	// printf("queue: id %d %ld, id %d %ld\n", dongle->queue[0].id,
 	// 		dongle->queue[0].cmp, dongle->queue[1].id, dongle->queue[1].cmp);

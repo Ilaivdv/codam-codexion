@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:40:38 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 17:03:05 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	request_dongles(t_coder *coder)
 	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
 	{
 		if (coder->dongles[0]->queue[0].id == coder->id
-				&& coder->dongles[1]->queue[0].id == coder->id)
+			&& coder->dongles[1]->queue[0].id == coder->id)
 		{
 			take_dongles(coder);
 			return (0);

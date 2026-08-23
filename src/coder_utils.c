@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:45:21 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 17:49:03 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	init_coders(t_ctx *ctx)
 			.dongles = {ctx->dongles + i,
 			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
 			.deadline = get_elapsed_time(false) + ctx->params->burnout_time};
+		// DEBUG
+		// printf("coder %d deadline is %ld\n", ctx->coders[i].id, ctx->coders[i].deadline);
 	}
 	return (process_threads(ctx));
 }
@@ -46,11 +48,9 @@ static int	process_threads(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->params->n_coders)
-	{
 		if (pthread_create(&ctx->coders[i].thread, NULL,
 				&action_process, &ctx->coders[i]))
 			return (1);
-	}
 	i = -1;
 	while (++i < ctx->params->n_coders)
 		if (pthread_join(ctx->coders[i].thread, NULL))

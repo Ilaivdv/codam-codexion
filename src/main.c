@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:10:02 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:43:45 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 16:58:44 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char **argv)
 	pthread_create(&ctx.monitor_thread, NULL, &monitor_process, &ctx);
 	init_coders(&ctx);
 	pthread_join(ctx.monitor_thread, NULL);
-	cleanup(&ctx); // TODO destroy mutexes and conditions here
+	cleanup(&ctx);
 	return (0);
 }

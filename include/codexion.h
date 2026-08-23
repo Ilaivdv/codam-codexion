@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:49:51 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/23 17:14:45 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_queue
 {
 	int64_t	cmp;
 	int		id;
+	t_coder	*coder;
 }	t_queue;
 
 typedef struct s_dongle
