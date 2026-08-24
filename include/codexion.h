@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 21:22:02 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 13:52:40 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_ctx
 	pthread_t		monitor_thread;
 	pthread_mutex_t	coder_action_mutex;
 	t_params		*params;
+	int64_t			elapsed_time;
 	bool			process;
 
 	t_dongle		*dongles;

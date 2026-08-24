@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 21:20:24 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 10:50:49 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	process_threads(t_ctx *ctx)
 
 void	print_action(t_coder *coder, char *msg)
 {
+	if (!coder->ctx->process)
+		return;
 	pthread_mutex_lock(&coder->ctx->coder_action_mutex);
 	printf("%ld %d %s\n", get_elapsed_time(true), coder->id, msg);
 	pthread_mutex_unlock(&coder->ctx->coder_action_mutex);

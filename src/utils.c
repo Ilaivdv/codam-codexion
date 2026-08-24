@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 16:54:59 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 13:48:37 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	get_args(int argc, char **argv, t_params *ctx)
 	return (0);
 }
 
+#include <stdio.h>
+
 int64_t	get_elapsed_time(bool in_ms)
 {
 	static int64_t	epoch = -1;
@@ -47,10 +49,11 @@ int64_t	get_elapsed_time(bool in_ms)
 
 	gettimeofday(&tv, NULL);
 	if (epoch == -1)
-		epoch = tv.tv_usec;
-	current_time = tv.tv_usec;
+		epoch = (long long)tv.tv_sec + tv.tv_usec;
+	current_time = (long long)tv.tv_sec + tv.tv_usec;
 	if (in_ms)
 		return ((current_time - epoch) / 1000);
+	printf ("%ld, cur: %ld, epoch: %ld\n", (current_time - epoch), current_time, epoch);
 	return (current_time - epoch);
 }
 

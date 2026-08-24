@@ -24,7 +24,7 @@ help:
 	@echo "time_to_refactor	- The time it takes to refactor"
 	@echo "number_of_compiles_required - Number of compiles each coders has to reach until the program ends"
 	@echo "dongle_cooldown		- The cooldown a dongle has before it can be used again"
-	@echo -e "scheduler		- The scheduler used to decide coder priority, value can be only 'fifo' or 'edf'\n"
+	@echo "scheduler		- The scheduler used to decide coder priority, value can be only 'fifo' or 'edf'\n"
 
 $(NAME): $(OBJ)
 	$(CC) $(LIB_FLAGS) $^ -o $@

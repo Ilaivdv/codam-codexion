@@ -6,14 +6,12 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/23 18:18:16 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 11:48:00 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <sys/types.h>
-
-// #include <stdio.h>
 
 int	init_dongles(t_ctx *ctx)
 {
