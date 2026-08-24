@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 17:07:40 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 17:27:12 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*action_process(void *c)
 			&& coder->ctx->process)
 		action_process(coder);
 	else
-		print_action(coder, "		has finished compiles!", GREEN);
+		print_action(coder, "		has finished compiles! REMOVE THIS MESSAGE LATER", GREEN);
 	return (0);
 }
 
