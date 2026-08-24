@@ -6,14 +6,12 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 15:05:24 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:36:52 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <unistd.h>
-
-// static int	try_dongles(t_dongle *dongle);
 
 //TODO implement dongle cooldown
 int	request_dongles(t_coder *coder)
@@ -35,13 +33,22 @@ int	request_dongles(t_coder *coder)
 	return (1);
 }
 
-// static int	try_dongle(t_dongle *dongle)
-// {
-// 	return (0);
-// }
+int	get_availability(t_coder *coder)
+{
+	if (get_elapsed_time() < coder->dongles[0]->cooldown_time
+			|| get_elapsed_time() < coder->dongles[1]->cooldown_time)
+		return (1);
+	return (0);
+}
 
 void	take_dongles(t_coder *coder)
 {
+	while (coder->ctx->process && get_availability(coder))
+		usleep(UPDATE_TICKS);
+	if (!coder->ctx->process)
+		return ;
+	coder->dongles[0]->cooldown_time = get_elapsed_time() + \
+									   coder->ctx->params->dongle_cooldown;
 	dongle_heap_pop(coder->dongles[0]);
 	print_action(coder, "has taken a dongle");
 	dongle_heap_pop(coder->dongles[1]);

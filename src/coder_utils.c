@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 15:02:53 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:33:16 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	init_coders(t_ctx *ctx)
 			.compiles = 0, .dongles = {ctx->dongles + i,
 			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
 			.deadline = get_elapsed_time() + ctx->params->burnout_time};
-		// DEBUG
-		// printf("coder %d deadline is %ld\n", ctx->coders[i].id, ctx->coders[i].deadline);
 	}
 	return (process_threads(ctx));
 }

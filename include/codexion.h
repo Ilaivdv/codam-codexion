@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 14:52:11 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:32:53 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_coder
 	t_ctx			*ctx;
 	pthread_t		thread;
 	int				id;
-	unsigned int				compiles;
+	unsigned int	compiles;
 	t_dongle		*dongles[2];
 	int64_t			deadline;
 }	t_coder;
@@ -75,7 +75,7 @@ typedef struct s_queue
 typedef struct s_dongle
 {
 	pthread_mutex_t	mutex;
-	unsigned int	cooldown_time;
+	int64_t			cooldown_time;
 	t_queue			queue[2];
 	int				queue_size;
 }	t_dongle;
