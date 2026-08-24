@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 15:32:53 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 17:07:05 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 
 # define MAX_THREADS 512
 # define UPDATE_TICKS 500
+
+# define RED "\e[0;31m"
+# define GREEN "\e[0;32m"
+# define GREY "\e[0;90m"
+# define COLOR_RESET "\e[0m"
 
 typedef struct s_params	t_params;
 typedef struct s_ctx	t_ctx;
@@ -84,7 +89,8 @@ void	*monitor_process(void *ctx);
 void	*action_process(void *c);
 int		request_dongles(t_coder *coder);
 void	take_dongles(t_coder *coder);
-void	print_action(t_coder *coder, char *msg);
+void	release_dongles(t_coder *coder);
+void	print_action(t_coder *coder, char *msg, char *color);
 void	cleanup(t_ctx *ctx);
 
 int64_t	get_elapsed_time(void);
