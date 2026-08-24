@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 17:00:33 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 18:14:10 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 int	request_dongles(t_coder *coder)
 {
-	if (coder->ctx->params->n_coders <= 1)
-		return (1);
-	pthread_mutex_lock(&coder->dongles[0]->mutex);
-	pthread_mutex_lock(&coder->dongles[1]->mutex);
-	dongle_heap_push(coder, coder->dongles[0]);
-	dongle_heap_push(coder, coder->dongles[1]);
-	pthread_mutex_unlock(&coder->dongles[0]->mutex);
-	pthread_mutex_unlock(&coder->dongles[1]->mutex);
+	if (coder->ctx->params->n_coders > 1)
+	{
+		pthread_mutex_lock(&coder->dongles[0]->mutex);
+		pthread_mutex_lock(&coder->dongles[1]->mutex);
+		dongle_heap_push(coder, coder->dongles[0]);
+		dongle_heap_push(coder, coder->dongles[1]);
+		pthread_mutex_unlock(&coder->dongles[0]->mutex);
+		pthread_mutex_unlock(&coder->dongles[1]->mutex);
+	}
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (coder->dongles[0]->queue[0].id == coder->id
