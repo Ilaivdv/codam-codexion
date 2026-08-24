@@ -6,12 +6,11 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 18:30:41 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 20:07:39 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
-#include <stdbool.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>
@@ -61,6 +60,6 @@ void	print_action(t_coder *coder, char *msg, char *color)
 	pthread_mutex_lock(&coder->ctx->coder_action_mutex);
 	if (coder->ctx->process)
 		printf("%5ld %5d %s%s%s\n", get_elapsed_time(), coder->id, color, msg,
-				COLOR_RESET);
+			COLOR_RESET);
 	pthread_mutex_unlock(&coder->ctx->coder_action_mutex);
 }
