@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 13:19:24 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:14:37 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	*action_process(void *c)
 
 	coder_action(coder, coder->ctx->params->debug_time, "is debugging");
 	coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
-	coder->deadline = (get_elapsed_time(false) + \
-					  coder->ctx->params->burnout_time) % 1000000;
+	coder->deadline = get_elapsed_time() + coder->ctx->params->burnout_time;
 	if (++coder->compiles < coder->ctx->params->max_compiles
 			&& coder->ctx->process)
 		action_process(coder);
@@ -57,10 +56,10 @@ void	coder_compile(t_coder *coder)
 
 	if (coder->ctx->process)
 		print_action(coder, "is compiling");
-	end_time = get_elapsed_time(false) + coder->ctx->params->compile_time;
+	end_time = get_elapsed_time() + coder->ctx->params->compile_time;
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
-		if (get_elapsed_time(false) >= end_time)
+		if (get_elapsed_time() >= end_time)
 			break;
 	}
 	// printf("coder %d deadline: %ld, time: %ld\n", coder->id, end_time, get_elapsed_time(false));
@@ -72,10 +71,10 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 
 	if (coder->ctx->process)
 		print_action(coder, msg);
-	end_time = get_elapsed_time(false) + len;
+	end_time = get_elapsed_time() + len;
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
-		if (get_elapsed_time(false) >= end_time)
+		if (get_elapsed_time() >= end_time)
 			break;
 	}
 	// printf("%ld coder %d finished action\n", get_elapsed_time(true), coder->id);

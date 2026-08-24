@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 13:53:06 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:13:41 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	*monitor_process(void *c)
 	{
 		if (coder_burnout(ctx))
 			break;
-		ctx->elapsed_time = get_elapsed_time(false);
 	}
 	ctx->process = false;
 	return (NULL);
@@ -41,7 +40,7 @@ int	coder_burnout(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->params->n_coders)
 	{
-		if (get_elapsed_time(false) >= ctx->coders[i].deadline)
+		if (get_elapsed_time() >= ctx->coders[i].deadline)
 		{
 			print_action(&ctx->coders[i], "burned out");
 			return (1);

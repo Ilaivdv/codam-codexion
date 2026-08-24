@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 13:52:40 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:13:41 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_ctx
 	pthread_t		monitor_thread;
 	pthread_mutex_t	coder_action_mutex;
 	t_params		*params;
-	int64_t			elapsed_time;
 	bool			process;
 
 	t_dongle		*dongles;
@@ -88,7 +87,7 @@ void	take_dongles(t_coder *coder);
 void	print_action(t_coder *coder, char *msg);
 void	cleanup(t_ctx *ctx);
 
-int64_t	get_elapsed_time(bool in_ms);
+int64_t	get_elapsed_time(void);
 int		get_args(int argc, char **argv, t_params *params);
 int		init_coders(t_ctx *ctx);
 int		init_dongles(t_ctx *ctx);

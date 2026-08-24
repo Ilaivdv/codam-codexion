@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 13:48:37 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:16:14 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	get_args(int argc, char **argv, t_params *ctx)
 	if (argc != 9)
 		return (1);
 	*ctx = (t_params){.n_coders = atoi(argv[1]),
-		.burnout_time = atoi(argv[2]) * 1000,
-		.compile_time = atoi(argv[3]) * 1000,
-		.debug_time = atoi(argv[4]) * 1000,
-		.refactor_time = atoi(argv[5]) * 1000,
+		.burnout_time = atoi(argv[2]),
+		.compile_time = atoi(argv[3]),
+		.debug_time = atoi(argv[4]),
+		.refactor_time = atoi(argv[5]),
 		.max_compiles = atoi(argv[6]),
-		.dongle_cooldown = atoi(argv[7]) * 1000};
+		.dongle_cooldown = atoi(argv[7])};
 	if (!strcmp(argv[8], "fifo"))
 		ctx->scheduler = FIFO;
 	else if (!strcmp(argv[8], "edf"))
@@ -39,9 +39,7 @@ int	get_args(int argc, char **argv, t_params *ctx)
 	return (0);
 }
 
-#include <stdio.h>
-
-int64_t	get_elapsed_time(bool in_ms)
+int64_t	get_elapsed_time(void)
 {
 	static int64_t	epoch = -1;
 	struct timeval	tv;
@@ -49,20 +47,17 @@ int64_t	get_elapsed_time(bool in_ms)
 
 	gettimeofday(&tv, NULL);
 	if (epoch == -1)
-		epoch = (long long)tv.tv_sec + tv.tv_usec;
-	current_time = (long long)tv.tv_sec + tv.tv_usec;
-	if (in_ms)
-		return ((current_time - epoch) / 1000);
-	printf ("%ld, cur: %ld, epoch: %ld\n", (current_time - epoch), current_time, epoch);
+		epoch = (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	current_time = (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (current_time - epoch);
 }
 
 int64_t	get_cmp(t_coder *coder)
 {
 	if (coder->ctx->params->scheduler == FIFO)
-		return (get_elapsed_time(false));
+		return (get_elapsed_time());
 	else
-		return (coder->deadline - get_elapsed_time(false));
+		return (coder->deadline - get_elapsed_time());
 }
 
 void	cleanup(t_ctx *ctx)
