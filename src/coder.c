@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 14:54:47 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 17:07:40 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,36 @@ void	*action_process(void *c)
 
 	coder = (t_coder *)c;
 	if (request_dongles(coder))
-		return (0); // TODO wait for condition here
+		return (0);
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_lock(&coder->dongles[1]->mutex);
-	if (coder->ctx->process)
-	{
-		take_dongles(coder);
-		coder_compile(coder);
-	}
+	take_dongles(coder);
+	coder_compile(coder);
+	release_dongles(coder);
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
-	coder_action(coder, coder->ctx->params->debug_time, "is debugging");
-	coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
+	if (coder->ctx->process)
+	{
+		coder_action(coder, coder->ctx->params->debug_time, "is debugging");
+		coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
+	}
 	if (++coder->compiles < coder->ctx->params->max_compiles
 			&& coder->ctx->process)
 		action_process(coder);
 	else
-		print_action(coder, "		has finished compiles!");
+		print_action(coder, "		has finished compiles!", GREEN);
 	return (0);
 }
 
-// #include <stdio.h>
 void	coder_compile(t_coder *coder)
 {
 	int64_t	end_time;
 
 	if (coder->ctx->process)
 	{
-		print_action(coder, "is compiling");
+		print_action(coder, "is compiling", GREY);
 		if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
 			coder->deadline = get_elapsed_time() + \
 							  coder->ctx->params->burnout_time + \
@@ -68,7 +68,6 @@ void	coder_compile(t_coder *coder)
 		if (get_elapsed_time() >= end_time)
 			break;
 	}
-	// printf("coder %d deadline: %ld, time: %ld\n", coder->id, end_time, get_elapsed_time(false));
 }
 
 void	coder_action(t_coder *coder, int64_t len, char *msg)
@@ -76,12 +75,11 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 	int64_t	end_time;
 
 	if (coder->ctx->process)
-		print_action(coder, msg);
+		print_action(coder, msg, GREY);
 	end_time = get_elapsed_time() + len;
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (get_elapsed_time() >= end_time)
 			break;
 	}
-	// printf("%ld coder %d finished action\n", get_elapsed_time(true), coder->id);
 }

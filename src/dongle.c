@@ -6,14 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 15:36:52 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 17:00:33 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <unistd.h>
 
-//TODO implement dongle cooldown
 int	request_dongles(t_coder *coder)
 {
 	if (coder->ctx->params->n_coders <= 1)
@@ -33,7 +32,7 @@ int	request_dongles(t_coder *coder)
 	return (1);
 }
 
-int	get_availability(t_coder *coder)
+static int	get_availability(t_coder *coder)
 {
 	if (get_elapsed_time() < coder->dongles[0]->cooldown_time
 			|| get_elapsed_time() < coder->dongles[1]->cooldown_time)
@@ -47,10 +46,16 @@ void	take_dongles(t_coder *coder)
 		usleep(UPDATE_TICKS);
 	if (!coder->ctx->process)
 		return ;
+	dongle_heap_pop(coder->dongles[0]);
+	print_action(coder, "has taken a dongle", GREEN);
+	print_action(coder, "has taken a dongle", GREEN);
+	dongle_heap_pop(coder->dongles[1]);
+}
+
+void	release_dongles(t_coder *coder)
+{
 	coder->dongles[0]->cooldown_time = get_elapsed_time() + \
 									   coder->ctx->params->dongle_cooldown;
-	dongle_heap_pop(coder->dongles[0]);
-	print_action(coder, "has taken a dongle");
-	dongle_heap_pop(coder->dongles[1]);
-	print_action(coder, "has taken a dongle");
+	coder->dongles[1]->cooldown_time = get_elapsed_time() + \
+									   coder->ctx->params->dongle_cooldown;
 }
