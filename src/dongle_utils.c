@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 11:48:00 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:04:43 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	init_dongles(t_ctx *ctx)
 	return (0);
 }
 
-static void	dongle_heapify(t_dongle *dongle)
+void	dongle_heapify(t_dongle *dongle)
 {
 	t_queue	tmp;
 
+	if (dongle->queue_size == 1)
+		return ;
 	dongle->queue[0].cmp = get_cmp(dongle->queue[0].coder);
 	dongle->queue[1].cmp = get_cmp(dongle->queue[1].coder);
 	if (dongle->queue[1].cmp < dongle->queue[0].cmp)

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 14:13:41 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:52:11 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdint.h>
 
 # define MAX_THREADS 512
-# define UPDATE_TICKS 10
+# define UPDATE_TICKS 500
 
 typedef struct s_params	t_params;
 typedef struct s_ctx	t_ctx;
@@ -92,6 +92,7 @@ int		get_args(int argc, char **argv, t_params *params);
 int		init_coders(t_ctx *ctx);
 int		init_dongles(t_ctx *ctx);
 int64_t	get_cmp(t_coder *coder);
+void	dongle_heapify(t_dongle *dongle);
 void	dongle_heap_push(t_coder *coder, t_dongle *dongle);
 void	dongle_heap_pop(t_dongle *dongle);
 

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 14:14:37 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:54:47 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	*action_process(void *c)
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
-
 	coder_action(coder, coder->ctx->params->debug_time, "is debugging");
 	coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
-	coder->deadline = get_elapsed_time() + coder->ctx->params->burnout_time;
 	if (++coder->compiles < coder->ctx->params->max_compiles
 			&& coder->ctx->process)
 		action_process(coder);
@@ -55,7 +53,15 @@ void	coder_compile(t_coder *coder)
 	int64_t	end_time;
 
 	if (coder->ctx->process)
+	{
 		print_action(coder, "is compiling");
+		if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
+			coder->deadline = get_elapsed_time() + \
+							  coder->ctx->params->burnout_time + \
+							  coder->ctx->params->compile_time;
+		else
+			coder->deadline = -1;
+	}
 	end_time = get_elapsed_time() + coder->ctx->params->compile_time;
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{

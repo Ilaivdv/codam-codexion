@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 14:13:41 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 14:46:34 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	coder_burnout(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->params->n_coders)
 	{
-		if (get_elapsed_time() >= ctx->coders[i].deadline)
+		if (get_elapsed_time() >= ctx->coders[i].deadline
+				&& ctx->coders[i].deadline >= 0)
 		{
 			print_action(&ctx->coders[i], "burned out");
 			return (1);

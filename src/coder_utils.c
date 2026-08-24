@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 10:50:49 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:02:53 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_coders(t_ctx *ctx)
 		ctx->coders[i] = (t_coder){.ctx = ctx, .id = i + 1,
 			.compiles = 0, .dongles = {ctx->dongles + i,
 			ctx->dongles + ((i + 1) % ctx->params->n_coders)},
-			.deadline = get_elapsed_time(false) + ctx->params->burnout_time};
+			.deadline = get_elapsed_time() + ctx->params->burnout_time};
 		// DEBUG
 		// printf("coder %d deadline is %ld\n", ctx->coders[i].id, ctx->coders[i].deadline);
 	}
@@ -55,7 +55,6 @@ static int	process_threads(t_ctx *ctx)
 	while (++i < ctx->params->n_coders)
 		if (pthread_join(ctx->coders[i].thread, NULL))
 			return (2);
-	ctx->process = false;
 	return (0);
 }
 
@@ -64,6 +63,6 @@ void	print_action(t_coder *coder, char *msg)
 	if (!coder->ctx->process)
 		return;
 	pthread_mutex_lock(&coder->ctx->coder_action_mutex);
-	printf("%ld %d %s\n", get_elapsed_time(true), coder->id, msg);
+	printf("%ld %d %s\n", get_elapsed_time(), coder->id, msg);
 	pthread_mutex_unlock(&coder->ctx->coder_action_mutex);
 }

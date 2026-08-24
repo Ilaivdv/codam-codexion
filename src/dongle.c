@@ -6,12 +6,14 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 13:08:47 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 15:05:24 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <unistd.h>
+
+// static int	try_dongles(t_dongle *dongle);
 
 //TODO implement dongle cooldown
 int	request_dongles(t_coder *coder)
@@ -19,19 +21,24 @@ int	request_dongles(t_coder *coder)
 	if (coder->ctx->params->n_coders <= 1)
 		return (1);
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
-	if (coder->ctx->params->n_coders > 1)
-		pthread_mutex_lock(&coder->dongles[1]->mutex);
+	pthread_mutex_lock(&coder->dongles[1]->mutex);
 	dongle_heap_push(coder, coder->dongles[0]);
 	dongle_heap_push(coder, coder->dongles[1]);
 	pthread_mutex_unlock(&coder->dongles[0]->mutex);
-	if (coder->ctx->params->n_coders > 1)
-		pthread_mutex_unlock(&coder->dongles[1]->mutex);
+	pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
+	{
 		if (coder->dongles[0]->queue[0].id == coder->id
 			&& coder->dongles[1]->queue[0].id == coder->id)
 			return (0);
+	}
 	return (1);
 }
+
+// static int	try_dongle(t_dongle *dongle)
+// {
+// 	return (0);
+// }
 
 void	take_dongles(t_coder *coder)
 {
