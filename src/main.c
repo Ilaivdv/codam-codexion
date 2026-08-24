@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:10:02 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 18:22:27 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/24 18:42:00 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+// TODO FIX NORM ERRORS
 int	main(int argc, char **argv)
 {
 	t_ctx		ctx;
