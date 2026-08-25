@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 15:59:12 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 21:41:23 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_dongle
 {
 	pthread_mutex_t	mutex;
 	int64_t			cooldown_time;
+	bool			is_available;
 	t_queue			queue[2];
 	int				queue_size;
 	pthread_mutex_t	queue_mutex;

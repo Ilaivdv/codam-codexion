@@ -6,12 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 16:29:41 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 22:26:27 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <sys/types.h>
+#include <stdbool.h>
 
 int	init_dongles(t_ctx *ctx)
 {
@@ -23,7 +24,7 @@ int	init_dongles(t_ctx *ctx)
 		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL)
 			|| pthread_mutex_init(&(ctx->dongles + i)->queue_mutex, NULL))
 			return (1);
-		ctx->dongles[i].queue_size = 0;
+		ctx->dongles[i] = (t_dongle){.is_available = true, .queue_size = 0};
 	}
 	return (0);
 }
