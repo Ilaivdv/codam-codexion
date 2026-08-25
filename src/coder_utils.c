@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:26:18 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 18:30:41 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 09:14:38 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ void	print_action(t_coder *coder, char *msg, char *color)
 	pthread_mutex_lock(&coder->ctx->coder_action_mutex);
 	if (coder->ctx->process)
 		printf("%5ld %5d %s%s%s\n", get_elapsed_time(), coder->id, color, msg,
-				COLOR_RESET);
+			COLOR_RESET);
 	pthread_mutex_unlock(&coder->ctx->coder_action_mutex);
 }
