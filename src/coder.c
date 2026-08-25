@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 16:30:47 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 17:10:58 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ void	coder_compile(t_coder *coder)
 	if (get_process(coder->ctx))
 	{
 		print_action(coder, "is compiling", GREY);
-		if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
-			set_coder_deadline(coder, get_elapsed_time(coder->ctx)
-				+ coder->ctx->params->burnout_time
-				+ coder->ctx->params->compile_time);
-		else
-			set_coder_deadline(coder, -1);
 	}
 	end_time = get_elapsed_time(coder->ctx) + coder->ctx->params->compile_time;
 	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
@@ -67,6 +61,11 @@ void	coder_compile(t_coder *coder)
 		if (get_elapsed_time(coder->ctx) >= end_time)
 			break ;
 	}
+	if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
+		set_coder_deadline(coder, get_elapsed_time(coder->ctx)
+			+ coder->ctx->params->burnout_time);
+	else
+		set_coder_deadline(coder, -1);
 }
 
 void	coder_action(t_coder *coder, int64_t len, char *msg)
