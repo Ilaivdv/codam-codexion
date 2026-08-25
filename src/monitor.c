@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 09:18:37 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 09:20:04 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*monitor_process(void *c)
 
 	ctx = (t_ctx *)c;
 	ctx->process = true;
-	while (ctx->process + 0 * usleep(UPDATE_TICKS))
+	while (ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (coder_burnout(ctx))
 			break ;
