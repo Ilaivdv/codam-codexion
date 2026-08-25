@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 16:44:05 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 18:37:04 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	request_dongles(t_coder *coder)
 		dongle_heap_push(coder, coder->dongles[1]);
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	}
-	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
+	while (get_process(coder->ctx))
 	{
 		if (check_queue_front(coder->dongles[0], coder->id)
 			&& check_queue_front(coder->dongles[1], coder->id))
 			return (0);
+		usleep(UPDATE_TICKS);
 	}
 	return (1);
 }

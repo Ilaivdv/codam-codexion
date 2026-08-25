@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 17:10:58 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 18:36:43 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,13 @@ void	coder_compile(t_coder *coder)
 	int64_t	end_time;
 
 	if (get_process(coder->ctx))
-	{
 		print_action(coder, "is compiling", GREY);
-	}
 	end_time = get_elapsed_time(coder->ctx) + coder->ctx->params->compile_time;
-	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
+	while (get_process(coder->ctx))
 	{
 		if (get_elapsed_time(coder->ctx) >= end_time)
 			break ;
+		usleep(UPDATE_TICKS);
 	}
 	if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
 		set_coder_deadline(coder, get_elapsed_time(coder->ctx)
@@ -75,9 +74,10 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 	if (get_process(coder->ctx))
 		print_action(coder, msg, GREY);
 	end_time = get_elapsed_time(coder->ctx) + len;
-	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
+	while (get_process(coder->ctx))
 	{
 		if (get_elapsed_time(coder->ctx) >= end_time)
 			break ;
+		usleep(UPDATE_TICKS);
 	}
 }
