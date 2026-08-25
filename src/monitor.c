@@ -6,13 +6,15 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 22:26:06 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 09:23:26 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <sys/time.h>
 #include <stdbool.h>
+#include <sys/time.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
 
@@ -24,9 +26,11 @@ void	*monitor_process(void *c)
 
 	ctx = (t_ctx *)c;
 	ctx->process = true;
-	while (ctx->process + 0 * usleep(UPDATE_TICKS))
+	while (ctx->process || 0 * usleep(UPDATE_TICKS))
+	{
 		if (coder_burnout(ctx))
 			break ;
+	}
 	ctx->process = false;
 	return (NULL);
 }
