@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 09:13:29 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 15:57:33 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*action_process(void *c)
 	t_coder				*coder;
 
 	coder = (t_coder *)c;
-	if (request_dongles(coder))
+	if (coder->ctx->params->max_compiles <= 0 || request_dongles(coder))
 		return (0);
 	pthread_mutex_lock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
@@ -32,17 +32,17 @@ void	*action_process(void *c)
 	take_dongles(coder);
 	coder_compile(coder);
 	release_dongles(coder);
-	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
-	if (coder->ctx->process)
+	pthread_mutex_unlock(&coder->dongles[0]->mutex);
+	if (get_process(coder->ctx))
 	{
 		coder_action(coder, coder->ctx->params->debug_time, "is debugging");
 		coder_action(coder, coder->ctx->params->refactor_time,
 			"is refactoring");
 	}
 	if (++coder->compiles < coder->ctx->params->max_compiles
-		&& coder->ctx->process)
+		&& get_process(coder->ctx))
 		action_process(coder);
 	return (0);
 }
@@ -51,20 +51,20 @@ void	coder_compile(t_coder *coder)
 {
 	int64_t	end_time;
 
-	if (coder->ctx->process)
+	if (get_process(coder->ctx))
 	{
 		print_action(coder, "is compiling", GREY);
 		if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
-			coder->deadline = get_elapsed_time() + \
-coder->ctx->params->burnout_time + \
-coder->ctx->params->compile_time;
+			set_coder_deadline(coder, get_elapsed_time(coder->ctx)
+				+ coder->ctx->params->burnout_time
+				+ coder->ctx->params->compile_time);
 		else
-			coder->deadline = -1;
+			set_coder_deadline(coder, -1);
 	}
-	end_time = get_elapsed_time() + coder->ctx->params->compile_time;
-	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
+	end_time = get_elapsed_time(coder->ctx) + coder->ctx->params->compile_time;
+	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
 	{
-		if (get_elapsed_time() >= end_time)
+		if (get_elapsed_time(coder->ctx) >= end_time)
 			break ;
 	}
 }
@@ -73,12 +73,12 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 {
 	int64_t	end_time;
 
-	if (coder->ctx->process)
+	if (get_process(coder->ctx))
 		print_action(coder, msg, GREY);
-	end_time = get_elapsed_time() + len;
-	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
+	end_time = get_elapsed_time(coder->ctx) + len;
+	while (get_process(coder->ctx) || 0 * usleep(UPDATE_TICKS))
 	{
-		if (get_elapsed_time() >= end_time)
+		if (get_elapsed_time(coder->ctx) >= end_time)
 			break ;
 	}
 }

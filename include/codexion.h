@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 17:07:05 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 15:59:12 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef struct s_params
 typedef struct s_ctx
 {
 	pthread_t		monitor_thread;
+	pthread_mutex_t	process_mutex;
 	pthread_mutex_t	coder_action_mutex;
+	pthread_mutex_t	time_mutex;
 	t_params		*params;
 	bool			process;
 
@@ -68,6 +70,7 @@ typedef struct s_coder
 	unsigned int	compiles;
 	t_dongle		*dongles[2];
 	int64_t			deadline;
+	pthread_mutex_t	deadline_mutex;
 }	t_coder;
 
 typedef struct s_queue
@@ -83,23 +86,31 @@ typedef struct s_dongle
 	int64_t			cooldown_time;
 	t_queue			queue[2];
 	int				queue_size;
+	pthread_mutex_t	queue_mutex;
 }	t_dongle;
 
 void	*monitor_process(void *ctx);
 void	*action_process(void *c);
+bool	get_process(t_ctx *ctx);
+void	set_process(t_ctx *ctx, bool process);
+
+int		init_coders(t_ctx *ctx);
+void	print_action(t_coder *coder, char *msg, char *color);
+int64_t	get_coder_deadline(t_coder *coder);
+void	set_coder_deadline(t_coder *coder, int64_t deadline);
+
+int		init_dongles(t_ctx *ctx);
 int		request_dongles(t_coder *coder);
 void	take_dongles(t_coder *coder);
 void	release_dongles(t_coder *coder);
-void	print_action(t_coder *coder, char *msg, char *color);
-void	cleanup(t_ctx *ctx);
-
-int64_t	get_elapsed_time(void);
-int		get_args(int argc, char **argv, t_params *params);
-int		init_coders(t_ctx *ctx);
-int		init_dongles(t_ctx *ctx);
-int64_t	get_cmp(t_coder *coder);
 void	dongle_heapify(t_dongle *dongle);
 void	dongle_heap_push(t_coder *coder, t_dongle *dongle);
 void	dongle_heap_pop(t_dongle *dongle);
+bool	check_queue_front(t_dongle *dongle, int id);
+
+void	cleanup(t_ctx *ctx);
+int64_t	get_elapsed_time(t_ctx *ctx);
+int		get_args(int argc, char **argv, t_params *params);
+int64_t	get_cmp(t_coder *coder);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 09:16:59 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 15:58:27 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	init_dongles(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->params->n_coders)
 	{
-		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL))
+		if (pthread_mutex_init(&(ctx->dongles + i)->mutex, NULL)
+			|| pthread_mutex_init(&(ctx->dongles + i)->queue_mutex, NULL))
 			return (1);
 		ctx->dongles[i].queue_size = 0;
 	}
@@ -31,6 +32,7 @@ void	dongle_heapify(t_dongle *dongle)
 {
 	t_queue	tmp;
 
+	pthread_mutex_lock(&dongle->queue_mutex);
 	if (dongle->queue_size == 1)
 		return ;
 	dongle->queue[0].cmp = get_cmp(dongle->queue[0].coder);
@@ -41,10 +43,12 @@ void	dongle_heapify(t_dongle *dongle)
 		dongle->queue[0] = dongle->queue[1];
 		dongle->queue[1] = tmp;
 	}
+	pthread_mutex_unlock(&dongle->queue_mutex);
 }
 
 void	dongle_heap_push(t_coder *coder, t_dongle *dongle)
 {
+	pthread_mutex_lock(&dongle->queue_mutex);
 	dongle->queue_size++;
 	if (dongle->queue_size == 1)
 		dongle->queue[0] = (t_queue){.cmp = get_cmp(coder),
@@ -63,11 +67,27 @@ void	dongle_heap_push(t_coder *coder, t_dongle *dongle)
 		if (coder->ctx->params->scheduler == EDF)
 			dongle_heapify(dongle);
 	}
+	pthread_mutex_unlock(&dongle->queue_mutex);
 }
 
 void	dongle_heap_pop(t_dongle *dongle)
 {
+	pthread_mutex_lock(&dongle->queue_mutex);
 	dongle->queue[0] = dongle->queue[1];
 	dongle->queue[1] = (t_queue){.cmp = 0, .id = 0};
 	dongle->queue_size--;
+	pthread_mutex_unlock(&dongle->queue_mutex);
+}
+
+bool	check_queue_front(t_dongle *dongle, int id)
+{
+	int	res;
+
+	pthread_mutex_lock(&dongle->queue_mutex);
+	if (dongle->queue[0].id == id)
+		res = true;
+	else
+		res = false;
+	pthread_mutex_unlock(&dongle->queue_mutex);
+	return (res);
 }

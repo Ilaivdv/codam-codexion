@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 09:23:26 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 15:58:15 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	get_args(int argc, char **argv, t_params *ctx)
 	else
 		return (1);
 	while (argv++ && *(argv + 1) != NULL)
-		if (atoi(*argv) <= 0)
+		if (atoi(*argv) < 0)
 			return (1);
 	return (0);
 }
@@ -41,9 +41,9 @@ int	get_args(int argc, char **argv, t_params *ctx)
 int64_t	get_cmp(t_coder *coder)
 {
 	if (coder->ctx->params->scheduler == FIFO)
-		return (get_elapsed_time());
+		return (get_elapsed_time(coder->ctx));
 	else
-		return (coder->deadline - get_elapsed_time());
+		return (get_coder_deadline(coder) - get_elapsed_time(coder->ctx));
 }
 
 void	cleanup(t_ctx *ctx)
@@ -52,7 +52,13 @@ void	cleanup(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->params->n_coders)
+	{
 		pthread_mutex_destroy(&ctx->dongles[i].mutex);
+		pthread_mutex_destroy(&ctx->dongles[i].queue_mutex);
+		pthread_mutex_destroy(&ctx->coders[i].deadline_mutex);
+	}
+	pthread_mutex_destroy(&ctx->process_mutex);
+	pthread_mutex_destroy(&ctx->time_mutex);
 	pthread_mutex_destroy(&ctx->coder_action_mutex);
 	free(ctx->coders);
 	free(ctx->dongles);

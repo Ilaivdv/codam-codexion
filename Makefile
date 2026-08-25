@@ -1,7 +1,7 @@
 .PHONY: all re clean fclean help
 .DEFAULT_GOAL: all
 
-CC = cc -Wall -Werror -Wextra
+CC = cc -Wall -Werror -Wextra -fsanitize=thread -g
 LIB_FLAGS = -lpthread
 NAME = codexion
 SRC_DIR = src
