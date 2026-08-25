@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>

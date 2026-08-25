@@ -12,6 +12,7 @@
 
 #include "../include/codexion.h"
 #include <pthread.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <unistd.h>
 
@@ -61,7 +62,7 @@ coder->ctx->params->compile_time;
 			coder->deadline = -1;
 	}
 	end_time = get_elapsed_time() + coder->ctx->params->compile_time;
-	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
+	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (get_elapsed_time() >= end_time)
 			break ;
@@ -75,7 +76,7 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 	if (coder->ctx->process)
 		print_action(coder, msg, GREY);
 	end_time = get_elapsed_time() + len;
-	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
+	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (get_elapsed_time() >= end_time)
 			break ;

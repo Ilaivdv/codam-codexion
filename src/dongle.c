@@ -24,7 +24,7 @@ int	request_dongles(t_coder *coder)
 		pthread_mutex_unlock(&coder->dongles[0]->mutex);
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
 	}
-	while (coder->ctx->process + 0 * usleep(UPDATE_TICKS))
+	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (coder->dongles[0]->queue[0].id == coder->id
 			&& coder->dongles[1]->queue[0].id == coder->id)
