@@ -6,12 +6,11 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/18 15:27:50 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 15:33:23 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 09:23:26 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
-#include <sys/time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
@@ -37,19 +36,6 @@ int	get_args(int argc, char **argv, t_params *ctx)
 		if (atoi(*argv) <= 0)
 			return (1);
 	return (0);
-}
-
-int64_t	get_elapsed_time(void)
-{
-	static int64_t	epoch = -1;
-	struct timeval	tv;
-	int64_t			current_time;
-
-	gettimeofday(&tv, NULL);
-	if (epoch == -1)
-		epoch = (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	current_time = (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (current_time - epoch);
 }
 
 int64_t	get_cmp(t_coder *coder)
