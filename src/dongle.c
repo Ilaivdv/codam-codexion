@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 21:42:06 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 15:56:55 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 16:44:05 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	request_dongles(t_coder *coder)
 
 static int	get_availability(t_coder *coder)
 {
+	if (coder->ctx->params->n_coders <= 1)
+		return (1);
 	if (get_elapsed_time(coder->ctx) < coder->dongles[0]->cooldown_time
 		|| get_elapsed_time(coder->ctx) < coder->dongles[1]->cooldown_time)
 		return (1);
