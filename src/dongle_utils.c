@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/21 16:06:22 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 15:58:27 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 16:29:41 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	dongle_heapify(t_dongle *dongle)
 
 	pthread_mutex_lock(&dongle->queue_mutex);
 	if (dongle->queue_size == 1)
+	{
 		return ;
+		pthread_mutex_unlock(&dongle->queue_mutex);
+	}
 	dongle->queue[0].cmp = get_cmp(dongle->queue[0].coder);
 	dongle->queue[1].cmp = get_cmp(dongle->queue[1].coder);
 	if (dongle->queue[1].cmp < dongle->queue[0].cmp)
@@ -65,7 +68,11 @@ void	dongle_heap_push(t_coder *coder, t_dongle *dongle)
 				.id = coder->id, .coder = coder};
 		}
 		if (coder->ctx->params->scheduler == EDF)
+		{
+			pthread_mutex_unlock(&dongle->queue_mutex);
 			dongle_heapify(dongle);
+			pthread_mutex_lock(&dongle->queue_mutex);
+		}
 	}
 	pthread_mutex_unlock(&dongle->queue_mutex);
 }

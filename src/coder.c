@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 15:57:33 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 16:30:47 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	*action_process(void *c)
 	take_dongles(coder);
 	coder_compile(coder);
 	release_dongles(coder);
+	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (coder->ctx->params->n_coders > 1)
 		pthread_mutex_unlock(&coder->dongles[1]->mutex);
-	pthread_mutex_unlock(&coder->dongles[0]->mutex);
 	if (get_process(coder->ctx))
 	{
 		coder_action(coder, coder->ctx->params->debug_time, "is debugging");
