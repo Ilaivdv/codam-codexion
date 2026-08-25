@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/16 15:20:31 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/24 18:13:35 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/25 09:13:29 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ void	*action_process(void *c)
 	if (coder->ctx->process)
 	{
 		coder_action(coder, coder->ctx->params->debug_time, "is debugging");
-		coder_action(coder, coder->ctx->params->refactor_time, "is refactoring");
+		coder_action(coder, coder->ctx->params->refactor_time,
+			"is refactoring");
 	}
 	if (++coder->compiles < coder->ctx->params->max_compiles
-			&& coder->ctx->process)
+		&& coder->ctx->process)
 		action_process(coder);
-	else
-		print_action(coder, "		has finished compiles! REMOVE THIS MESSAGE LATER", GREEN);
 	return (0);
 }
 
@@ -57,8 +56,8 @@ void	coder_compile(t_coder *coder)
 		print_action(coder, "is compiling", GREY);
 		if ((coder->compiles + 1) < coder->ctx->params->max_compiles)
 			coder->deadline = get_elapsed_time() + \
-							  coder->ctx->params->burnout_time + \
-							  coder->ctx->params->compile_time;
+coder->ctx->params->burnout_time + \
+coder->ctx->params->compile_time;
 		else
 			coder->deadline = -1;
 	}
@@ -66,7 +65,7 @@ void	coder_compile(t_coder *coder)
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (get_elapsed_time() >= end_time)
-			break;
+			break ;
 	}
 }
 
@@ -80,6 +79,6 @@ void	coder_action(t_coder *coder, int64_t len, char *msg)
 	while (coder->ctx->process || 0 * usleep(UPDATE_TICKS))
 	{
 		if (get_elapsed_time() >= end_time)
-			break;
+			break ;
 	}
 }
