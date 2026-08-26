@@ -6,14 +6,13 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/19 12:13:09 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 18:37:24 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/26 11:36:41 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <stdbool.h>
 #include <sys/time.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
 

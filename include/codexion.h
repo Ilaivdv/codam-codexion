@@ -6,7 +6,7 @@
 /*   By: ivan-der <ivan-der@student.codam.nl>        +#+ +:+ +#+              */
 /*                                                  +#+  +#+#+#               */
 /*   Created: 2026/08/15 17:04:47 by ivan-der      #+#   #+#+#                */
-/*   Updated: 2026/08/25 21:41:23 by ivan-der     ###    #### orminette :(    */
+/*   Updated: 2026/08/26 11:32:56 by ivan-der     ###    #### orminette :(    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int		request_dongles(t_coder *coder);
 void	take_dongles(t_coder *coder);
 void	release_dongles(t_coder *coder);
 void	dongle_heapify(t_dongle *dongle);
-void	dongle_heap_push(t_coder *coder, t_dongle *dongle);
-void	dongle_heap_pop(t_dongle *dongle);
+void	dongle_heap_push(t_coder *coder, t_dongle *dongle, int64_t cmp);
+void	dongle_heap_remove(t_dongle *dongle, int id);
 bool	check_queue_front(t_dongle *dongle, int id);
 
 void	cleanup(t_ctx *ctx);
