@@ -72,7 +72,8 @@ This is also how burnout is precisely detected and stops any action correctly.
 
 ## Thead synchronization
 Pthreads `pthread_cond_t` was not used as I wanted to implement ways of signalling and waiting for events myself.<br>
-This was done with `t_ctx` storing timestamps that were used to check for events and program processing status.<br>
+This was done with `t_ctx` storing timestamps that were used to check for events and program processing status<br>
+and dongles having an `is_available` boolean to check whether actions can be performed.<br>
 When program processing status ever becomes false (usually due to coder burnout), all active coders and events exit and get freed properly.
 For coder coordination, the dongles were used to hold queues in the form of a heap.<br>
 Based on the chosen scheduler, the queue will prioritise coders accordingly and only allow a coder to start compilation when the dongle is not on cooldown.<br>
